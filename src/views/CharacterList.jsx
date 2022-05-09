@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function CharacterList() {
   const [characters, setCharacters] = useState([]);
@@ -16,20 +17,26 @@ export default function CharacterList() {
   return (
     <>
       <h1>Rick and Morty Characters</h1>
-      <ul>
-        {characters.map((character) => (
-          <li key={character.id}>
-            <span>
-              <img
-                width="100px"
-                src={character.image}
-                alt={`Image of ${character.name}`}
-              />
-              <h3>{character.name}</h3>
-            </span>
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <p>Loading characters...</p>
+      ) : (
+        <ul>
+          {characters.map((character) => (
+            <li key={character.id}>
+              <span>
+                <Link to={`/${character.id}`}>
+                  <img
+                    width="100px"
+                    src={character.image}
+                    alt={`Image of ${character.name}`}
+                  />
+                  {character.name}
+                </Link>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }
